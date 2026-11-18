@@ -1202,7 +1202,7 @@ find_ladder:            ; C=1 up / 0 down -> CF + E = target X of nearest ladder
     ld a,b : add a,a : add a,a : add a,a : sub 4 : jr nc,.q : xor a
 .q  ld e,a
 .n  inc b : ld a,b : cp 20 : jr c,.l
-    ld a,d : cp #ff : ccf
+    ld a,d : cp #ff
     ret
 
 face_hero:
