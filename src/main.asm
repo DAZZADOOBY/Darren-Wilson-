@@ -884,15 +884,25 @@ hero_move:              ; A = dx (hero, with room exits)
 .t  ld e,a : call walk_try : ret c
     ld (ix+C_X),e
     ret
-.exw ld a,(rrec+RR_W) : cp #ff : jr z,.cw
+.exw call gate_edge : or a : jr z,.cw
+    ld a,(rrec+RR_W) : cp #ff : jr z,.cw
     ld (next_room),a : ld (ix+C_X),142
     ret
 .cw ld (ix+C_X),0
     ret
-.exe ld a,(rrec+RR_E) : cp #ff : jr z,.ce
+.exe call gate_edge : cp 19 : jr z,.ce
+    ld a,(rrec+RR_E) : cp #ff : jr z,.ce
     ld (next_room),a : ld (ix+C_X),2
     ret
 .ce ld (ix+C_X),144
+    ret
+
+gate_edge:              ; -> A = column of a closed vertical gate, else #ff
+    ld a,(gate_closed) : or a : jr z,.n
+    ld a,(rrec+RR_GKIND) : or a : jr z,.n
+    ld a,(rrec+RR_GX)
+    ret
+.n  ld a,#ff
     ret
 
 h_attack:
