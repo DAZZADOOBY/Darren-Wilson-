@@ -11,6 +11,7 @@ Load `dist/dragon_of_digbeth.cpr` as a cartridge in a CPC Plus emulator (e.g. MA
 
 ```
 mame cpc6128p -cart dist/dragon_of_digbeth.cpr
+# or WinApe 2.0b2 (Plus mode): set Cartridge= in WinAPE.ini to this .cpr
 ```
 
 | Action | Keys |

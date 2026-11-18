@@ -996,10 +996,20 @@ h_down:
 .r  ld a,(entry_x) : ld (ix+C_X),a
     ld a,(entry_y) : ld (ix+C_Y),a
     ld a,(entry_st) : ld (ix+C_ST),a
-    ld (ix+C_INV),50
+    ld (ix+C_INV),100
+    push ix
+    ld ix,en0 : call en_retreat
+    ld ix,en1 : call en_retreat
+    pop ix
     ld (ix+C_FRAME),FR_HERO_STAND
     ld a,(entry_st) : or a : ret z
     ld (ix+C_FRAME),FR_HERO_CLIMB0
+    ret
+
+en_retreat:             ; send thugs back to their spawn after hero respawns
+    ld a,(ix+C_TYPE) : or a : ret z
+    cp 3 : ret z
+    ld (ix+C_ST),E_INACTIVE : ld (ix+C_VIS),0 : ld (ix+C_TIMER),75
     ret
 
 hero_drown:
